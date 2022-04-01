@@ -98,7 +98,6 @@ class Board extends Component {
       return <h1>You won babe :-*</h1>;
     }
     // TODO
-
     // make table board
     let tblboard = [];
     for ( let y = 0; y < this.props.nrows; y++) {
@@ -111,13 +110,19 @@ class Board extends Component {
                     flipCellsAroundMe={() => this.flipCellsAround(coord)}
                   />);
       }
-      tblboard.push(<tr>{row}</tr>);
+      tblboard.push(<tr key={y}>{row}</tr>);
     }
 
     return (
-      <table className="Board">
-        <tbody>{tblboard}</tbody>
-      </table>
+      <div>
+        <div className="Board-title">
+          <div className="neon-orange">Lights</div>
+          <div className="neon-blue">Out</div>
+        </div>
+        <table className="Board">
+          <tbody>{tblboard}</tbody>
+        </table>
+      </div>
     );
   }
 }
