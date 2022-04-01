@@ -39,10 +39,10 @@ class Board extends Component {
   constructor(props) {
     super(props);
     // TODO: set initial state
-    this.state= {
+    this.state = {
       hasWon: false,
       board: this.createBoard()
-    }
+    };
   }
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
@@ -89,39 +89,49 @@ class Board extends Component {
     this.setState({board: board, hasWon: hasWon});
   }
 
+  makeBoard() {
+    let tblBoard = [];
+    for ( let y = 0; y < this.props.nrows; y++) {
+      let row = [];
+      for (let x = 0; x < this.props.ncols; x++) {
+        let coord = `${y}-${x}`;
+        row.push(<Cell
+                    key={coord}
+                    isLit={this.state.board[y][x]}
+                    flipCellsAroundMe={() => this.flipCellsAround(coord)}
+                  />);
+      }
+      tblBoard.push(<tr key={y}>{row}</tr>);
+    }
+    return (
+      <table className='Board'>
+        <tbody>{tblBoard}</tbody>
+      </table>
+    );
+  }
 
   /** Render game board or winning message. */
 
   render() {
     // if the game is won, just show a winning msg & render nothing else
-    if (this.state.hasWon) {
-      return <h1>You won babe :-*</h1>;
-    }
     // TODO
-    // make table board
-    let tblboard = [];
-    for ( let y = 0; y < this.props.nrows; y++) {
-      let row = [];
-      for (let x = 0; x < this.props.ncols; x++) {
-        let coord = `${x}-${y}`;
-        row.push(<Cell
-                    key={coord}
-                    isLit={this.state.board[x][y]}
-                    flipCellsAroundMe={() => this.flipCellsAround(coord)}
-                  />);
-      }
-      tblboard.push(<tr key={y}>{row}</tr>);
-    }
 
     return (
       <div>
-        <div className="Board-title">
-          <div className="neon-orange">Lights</div>
-          <div className="neon-blue">Out</div>
-        </div>
-        <table className="Board">
-          <tbody>{tblboard}</tbody>
-        </table>
+        {this.state.hasWon ? (
+          <div className="Board-title">
+            <div className="neon-orange">You Won</div>
+            <div className="neon-blue">Darling !</div>
+          </div>
+        ) : (
+          <div>
+            <div className="Board-title">
+              <div className="neon-orange">Lights</div>
+              <div className="neon-blue">Out</div>
+            </div>
+            {this.makeBoard()}
+          </div>
+        )}
       </div>
     );
   }
