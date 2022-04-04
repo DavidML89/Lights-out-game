@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Cell from "./Cell";
 import './Board.css';
 
-
 /** Game board of Lights out.
  *
  * Properties:
@@ -69,7 +68,6 @@ class Board extends Component {
 
     function flipCell(y, x) {
       // if this coord is actually on board, flip it
-
       if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
         board[y][x] = !board[y][x];
       }
@@ -114,8 +112,6 @@ class Board extends Component {
 
   render() {
     // if the game is won, just show a winning msg & render nothing else
-    // TODO
-
     return (
       <div>
         {this.state.hasWon ? (
